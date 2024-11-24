@@ -7,7 +7,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/naotokubota/kai)](https://hub.docker.com/r/naotokubota/kai)
 [![Docker Image Size](https://img.shields.io/docker/image-size/naotokubota/kai)](https://hub.docker.com/r/naotokubota/kai)
 
-# Kai (v0.1.0)
+# Kai (v0.1.1)
 
 Rust implementation of read counting for regions of interest from RNA-seq BAM files.
 
