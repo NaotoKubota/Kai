@@ -1,4 +1,5 @@
 [![GitHub License](https://img.shields.io/github/license/NaotoKubota/Kai)](https://github.com/NaotoKubota/Kai/blob/main/LICENSE)
+[![DOI](https://zenodo.org/badge/893256586.svg)](https://doi.org/10.5281/zenodo.14211012)
 [![GitHub Release](https://img.shields.io/github/v/release/NaotoKubota/Kai?style=flat)](https://github.com/NaotoKubota/Kai/releases)
 [![GitHub Release Date](https://img.shields.io/github/release-date/NaotoKubota/Kai)](https://github.com/NaotoKubota/Kai/releases)
 [![Rust](https://github.com/NaotoKubota/Kai/actions/workflows/rust.yaml/badge.svg)](https://github.com/NaotoKubota/Kai/actions/workflows/rust.yaml)
