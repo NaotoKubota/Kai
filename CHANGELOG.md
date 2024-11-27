@@ -2,7 +2,7 @@
 
 All notable changes to this Kai project will be documented in this file.
 
-## [v0.1.2] - 2024-??-??
+## [v0.2.0] - 2024-11-27
 
 ### Added
 
