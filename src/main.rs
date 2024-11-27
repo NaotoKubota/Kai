@@ -54,7 +54,7 @@ fn parse_bed_file(bed_file: &str) -> io::Result<Vec<Region>> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Set up command-line arguments using clap
     let matches = Command::new("kai")
-        .version("0.1.1")
+        .version("0.2.0")
         .author("NaotoKubota")
         .about("Count reads mapped to regions of interest from bulk/single-cell RNA-seq data")
         .arg(Arg::new("mode")

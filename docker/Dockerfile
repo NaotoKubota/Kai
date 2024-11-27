@@ -1,5 +1,5 @@
 ###############################################################
-# Dockerfile to build container images for Kai (v0.1.1)
+# Dockerfile to build container images for Kai (v0.2.0)
 # Based on rust slim-bullseye
 ################################################################
 
@@ -21,7 +21,7 @@ RUN apt-get -qq update && \
 # Install Kai
 RUN mkdir -p /opt_kai && \
     cd /opt_kai && \
-    git clone https://github.com/NaotoKubota/Kai.git -b v0.1.1 && \
+    git clone https://github.com/NaotoKubota/Kai.git -b v0.2.0 && \
     cd Kai && \
     cargo build --release && \
     cp target/release/kai /usr/local/bin/
