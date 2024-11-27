@@ -7,20 +7,22 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/naotokubota/kai)](https://hub.docker.com/r/naotokubota/kai)
 [![Docker Image Size](https://img.shields.io/docker/image-size/naotokubota/kai)](https://hub.docker.com/r/naotokubota/kai)
 
-# Kai (v0.1.1)
+# Kai (v0.2.0)
 
 Rust implementation of read counting for regions of interest from RNA-seq BAM files.
 
 ## Usage
 
 ```bash
-Usage: kai [OPTIONS] <mode> <bam_file> <regions_file> <output_prefix>
+Count reads mapped to regions of interest from bulk/single-cell RNA-seq data
+
+Usage: kai [OPTIONS] <mode> <bam_file> <regions_file> <output_dir>
 
 Arguments:
-  <mode>           Mode of operation: 'bulk' or 'single' [possible values: bulk, single]
-  <bam_file>       Path to the BAM file
-  <regions_file>   Path to the BED file containing regions of interest
-  <output_prefix>  Output prefix for the output files
+  <mode>          Mode of operation: 'bulk' or 'single' [possible values: bulk, single]
+  <bam_file>      Path to the BAM file
+  <regions_file>  Path to the BED file containing regions of interest
+  <output_dir>    Output directory for the output files
 
 Options:
   -l, --max-loci <max_loci>                Maximum number of loci the read maps to [default: 1]

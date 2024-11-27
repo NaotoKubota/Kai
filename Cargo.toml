@@ -2,6 +2,12 @@
 name = "Kai"
 version = "0.1.0"
 edition = "2021"
+authors = ["Naoto Kubota <naotok@ucr.edu>"]
+description = "A tool for quantifying reads mapped to regions of interest from bulk and single-cell RNA-seq data"
+lisense-file = "LICENSE"
+readme = "README.md"
+keywards = ["RNA-seq", "single-cell", "preprocessing"]
+categories = ["command-line-utilities", "science::bioinformatics::genomics", "science::bioinformatics::sequence-analysis"]
 
 [dependencies]
 clap = "4.0"

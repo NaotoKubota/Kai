@@ -54,7 +54,7 @@ fn parse_bed_file(bed_file: &str) -> io::Result<Vec<Region>> {
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     // Set up command-line arguments using clap
     let matches = Command::new("kai")
-        .version("0.1.1")
+        .version("0.2.0")
         .author("NaotoKubota")
         .about("Count reads mapped to regions of interest from bulk/single-cell RNA-seq data")
         .arg(Arg::new("mode")
@@ -67,9 +67,9 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .arg(Arg::new("regions_file")
             .required(true)
             .help("Path to the BED file containing regions of interest"))
-        .arg(Arg::new("output_prefix")
+        .arg(Arg::new("output_dir")
             .required(true)
-            .help("Output prefix for the output files"))
+            .help("Output directory for the output files"))
         .arg(Arg::new("max_loci")
             .short('l')
             .long("max-loci")
@@ -92,7 +92,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mode = matches.get_one::<String>("mode").unwrap();
     let bam_file = matches.get_one::<String>("bam_file").unwrap();
     let regions_file = matches.get_one::<String>("regions_file").unwrap();
-    let output_prefix = matches.get_one::<String>("output_prefix").unwrap();
+    let output_dir = matches.get_one::<String>("output_dir").unwrap();
     let max_loci = *matches.get_one::<u32>("max_loci").unwrap();
     let cell_barcode_file = matches.get_one::<String>("cell_barcode_file");
     let verbose = matches.get_flag("verbose");
@@ -113,7 +113,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Mode: {}", mode);
     info!("BAM file: {}", bam_file);
     info!("Regions file: {}", regions_file);
-    info!("Output prefix: {}", output_prefix);
+    info!("Output prefix: {}", output_dir);
     info!("Maximum loci (NH): {}", max_loci);
     // Load cell barcodes of interest
     let cell_barcodes_of_interest = if mode == "single" {
@@ -235,10 +235,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     info!("Writing output files");
     if mode == "single" {
         // Prepare output files with compression
-        let mut matrix_file = GzEncoder::new(File::create(format!("{}_matrix.mtx.gz", output_prefix))?, Compression::default());
-        let mut barcodes_file = GzEncoder::new(File::create(format!("{}_barcodes.tsv.gz", output_prefix))?, Compression::default());
-        let mut features_file = GzEncoder::new(File::create(format!("{}_features.tsv.gz", output_prefix))?, Compression::default());
-        let mut output_tsv = GzEncoder::new(File::create(format!("{}_count_barcodes.tsv.gz", output_prefix))?, Compression::default());
+        let mut matrix_file = GzEncoder::new(File::create(format!("{}/matrix.mtx.gz", output_dir))?, Compression::default());
+        let mut barcodes_file = GzEncoder::new(File::create(format!("{}/barcodes.tsv.gz", output_dir))?, Compression::default());
+        let mut features_file = GzEncoder::new(File::create(format!("{}/features.tsv.gz", output_dir))?, Compression::default());
+        let mut output_tsv = GzEncoder::new(File::create(format!("{}/count_barcodes.tsv.gz", output_dir))?, Compression::default());
 
         // Write barcodes.tsv.gz
         debug!("Writing barcodes.tsv.gz");
@@ -270,7 +270,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
         // Add sparse matrix data and TSV data to the buffers
         debug!("Writing matrix.mtx.gz and count_barcodes.tsv.gz");
-        let barcode_map: HashMap<_, _> = barcode_list.iter().enumerate().map(|(i, b)| (b.as_str(), i + 1)).collect();
+        let barcode_map: HashMap<_, _> = barcode_list.iter().enumerate().map(|(i, b)| (b.as_str(), i)).collect();
         tsv_buffer.push("Feature\tBarcode\tCount".to_string());
         for (i, feature) in feature_list.iter().enumerate() {
             if let Some(cell_counts) = region_counts.get(*feature) {
@@ -292,7 +292,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         }
 
     } else {
-        let mut output_file = GzEncoder::new(File::create(format!("{}_count.tsv.gz", output_prefix))?, Compression::default());
+        let mut output_file = GzEncoder::new(File::create(format!("{}/count.tsv.gz", output_dir))?, Compression::default());
         debug!("Writing count.tsv.gz");
         writeln!(output_file, "Chr\tStart\tEnd\tRegion\tCount")?;
         for (region, count) in region_totals.iter().sorted() {
